@@ -7,42 +7,42 @@ LRESULT CALLBACK WndProcBase(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 
     switch (message)
     {
-    case WM_NCCREATE:
-    {
-        LPCREATESTRUCT lpCreate = (LPCREATESTRUCT)lParam;
-        wnd = (CWndBase*)(lpCreate->lpCreateParams);
-        wnd->SetWindowLongW(GWLP_USERDATA, (LONG_PTR)wnd);
-        return ::DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    break;
-    case WM_CREATE:
-    {
-        if (wnd == nullptr)
+        case WM_NCCREATE:
         {
-            wnd = (CWndBase*)(lParam);
+            LPCREATESTRUCT lpCreate = (LPCREATESTRUCT)lParam;
+            wnd = (CWndBase*)(lpCreate->lpCreateParams);
             wnd->SetWindowLongW(GWLP_USERDATA, (LONG_PTR)wnd);
+            return ::DefWindowProc(hWnd, message, wParam, lParam);
         }
-        return ::DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    case WM_COMMAND:
-    {
-        int wmId = LOWORD(wParam);
-        // Parse the menu selections:
-        switch (wmId)
+        break;
+        case WM_CREATE:
         {
-        case IDM_EXIT:
-            ::DestroyWindow(hWnd);
+            if (wnd == nullptr)
+            {
+                wnd = (CWndBase*)(lParam);
+                wnd->SetWindowLongW(GWLP_USERDATA, (LONG_PTR)wnd);
+            }
+            return ::DefWindowProc(hWnd, message, wParam, lParam);
+        }
+        case WM_COMMAND:
+        {
+            int wmId = LOWORD(wParam);
+            // Parse the menu selections:
+            switch (wmId)
+            {
+            case IDM_EXIT:
+                ::DestroyWindow(hWnd);
+                break;
+            default:
+                return ::DefWindowProc(hWnd, message, wParam, lParam);
+            }
+        }
+        break;
+        case WM_DESTROY:
+            ::PostQuitMessage(0);
             break;
         default:
             return ::DefWindowProc(hWnd, message, wParam, lParam);
-        }
-    }
-    break;
-    case WM_DESTROY:
-        ::PostQuitMessage(0);
-        break;
-    default:
-        return ::DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
 }
