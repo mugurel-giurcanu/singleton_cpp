@@ -2,6 +2,7 @@
 #include "CWinApp.h" 
 
 
+
 CWinApp::CWinApp(VOID) : m_hInst(NULL),
 m_hMenu(NULL), m_hIcon(NULL), m_hIconSmall(NULL), m_hCursor(NULL), m_hbrBackground(NULL),
 m_szTitle(), m_szMenuName(), m_szWindowClass()
