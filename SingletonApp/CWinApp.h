@@ -3,6 +3,7 @@
 #include "Resource.h"
 #define MAX_LOADSTRING 100 
 
+
 class CWinApp
 {
 private:
